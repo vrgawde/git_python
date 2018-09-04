@@ -2,6 +2,20 @@ import sys
 import os
 import hashlib
 
+def md5(fname):
+        hash_md5 = hashlib.md5()
+        with open(fname, "rb") as f:
+            for chunk in iter(lambda: f.read(4096), b""):
+                hash_md5.update(chunk)
+            return hash_md5.hexdigest()
+
+
+
+
+def init():
+    file_name = input(print("Enter file Name"))
+    initial_hash = md(file_name)
+    print(initial_hash) 
 
 def status():
     pass
@@ -10,12 +24,7 @@ def status():
 def log():
     fname = "/home/falcon/Desktop/College/CASS/python_git/sample_file.txt"
 
-    def md5(fname):
-        hash_md5 = hashlib.md5()
-        with open(fname, "rb") as f:
-            for chunk in iter(lambda: f.read(4096), b""):
-                hash_md5.update(chunk)
-            return hash_md5.hexdigest()
+    
 
     hash_of_file = md5(fname)
     f = open("hash.txt", "r")
