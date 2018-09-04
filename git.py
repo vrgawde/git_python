@@ -13,25 +13,25 @@ def md5(fname):
 
 
 def init():
-    file_name = input(print("Enter file Name"))
-    initial_hash = md(file_name)
+    global fname 
+    fname = input("Enter file Name: ")
+    initial_hash = md5(fname)
     print(initial_hash) 
+    f = open("log.txt", "a+")
+    f.write(initial_hash + " - Initial Hash")
+    f.write("\n")
+    f.close()
+
 
 def status():
     pass
 
 
 def log():
-    fname = "/home/falcon/Desktop/College/CASS/python_git/sample_file.txt"
-
+    os.system('cat log.txt')
     
 
-    hash_of_file = md5(fname)
-    f = open("hash.txt", "r")
-    line = f.readlines()
-    last_hash = line[-1]
-    print(last_hash)
-    f.close()
+"""
     if last_hash != hash_of_file:
         f = open("hash.txt", "a+")
         f.write(hash_of_file)
@@ -46,7 +46,7 @@ def log():
 
     else:
         print("No Changes")
-
+"""
 
 def commit():
     pass
@@ -58,6 +58,9 @@ def push():
 
 def pull():
     pass
+
+if sys.argv[1] == "init":
+    init()
 
 
 if sys.argv[1] == "status":
