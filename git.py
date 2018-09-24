@@ -14,7 +14,7 @@ def md5(fname):
 
 def init():
     initial_hash = md5(fname)
-    print(initial_hash) 
+    print(initial_hash)
     f = open("log.txt", "a+")
     f.write(initial_hash + " - Initial Hash")
     f.write("\n")
@@ -22,12 +22,22 @@ def init():
 
 
 def status():
-    pass
+    file_hash = md5(fname)
+    with open('log.txt', 'r') as f:
+        lines = f.read().splitlines()
+        last_line = lines[-1]
+        
+    if last_line[:32] == file_hash :
+        print("All Files are up-to-date. No Changes made")
+    else:
+        print("Following file have been modified: ")
+        print(fname)
+
 
 
 def log():
     os.system('cat log.txt')
-    
+
 
 """
     if last_hash != hash_of_file:
@@ -60,16 +70,7 @@ def commit():
         f = open("log.txt", "a+")
         f.write(file_hash + ' - ' + comment)
         f.write("\n")
-        f.close()        
-
-
-
-def push():
-    pass
-
-
-def pull():
-    pass
+        f.close()
 
 if sys.argv[1] == "init":
     init()
@@ -83,9 +84,3 @@ if sys.argv[1] == "log":
 
 if sys.argv[1] == "commit":
     commit()
-
-if sys.argv[1] == "push":
-    push()
-
-if sys.argv[1] == "pull":
-    pull()
