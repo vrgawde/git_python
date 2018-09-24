@@ -1,6 +1,8 @@
 import sys
 import os
 import hashlib
+import shutil
+
 fname = input("Enter file name: ")
 def md5(fname):
         hash_md5 = hashlib.md5()
@@ -10,9 +12,8 @@ def md5(fname):
             return hash_md5.hexdigest()
 
 
-
-
 def init():
+    os.system('mkdir all_versions')
     initial_hash = md5(fname)
     print(initial_hash)
     f = open("log.txt", "a+")
@@ -26,7 +27,7 @@ def status():
     with open('log.txt', 'r') as f:
         lines = f.read().splitlines()
         last_line = lines[-1]
-        
+
     if last_line[:32] == file_hash :
         print("All Files are up-to-date. No Changes made")
     else:
@@ -34,27 +35,9 @@ def status():
         print(fname)
 
 
-
 def log():
     os.system('cat log.txt')
 
-
-"""
-    if last_hash != hash_of_file:
-        f = open("hash.txt", "a+")
-        f.write(hash_of_file)
-        f.write("\n")
-        f.close()
-        f = open("hash.txt", "r")
-        print(fname)
-        print('-' * 40)
-        data = f.read()
-        print(data)
-        f.close()
-
-    else:
-        print("No Changes")
-"""
 
 def commit():
     file_hash = md5(fname)
@@ -72,6 +55,12 @@ def commit():
         f.write("\n")
         f.close()
 
+
+def push():
+    shutil.copy(fname, 'all_versions/')
+    file_hash = md5(fname)
+    os.rename('all_versions/a.c', 'all_versions/%s' % file_hash)
+
 if sys.argv[1] == "init":
     init()
 
@@ -84,3 +73,6 @@ if sys.argv[1] == "log":
 
 if sys.argv[1] == "commit":
     commit()
+
+if sys.argv[1] == "push":
+    push()
