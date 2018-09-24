@@ -61,9 +61,14 @@ def push():
     file_hash = md5(fname)
     os.rename('all_versions/a.c', 'all_versions/%s' % file_hash)
 
+
+def get():
+    file_hash = input("Enter the Hash of file version to be retrieved: ")
+    shutil.copy('all_versions/%s' % file_hash, './')
+
+
 if sys.argv[1] == "init":
     init()
-
 
 if sys.argv[1] == "status":
     status()
@@ -76,3 +81,6 @@ if sys.argv[1] == "commit":
 
 if sys.argv[1] == "push":
     push()
+
+if sys.argv[1] == "get":
+    get()
